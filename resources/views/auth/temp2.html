@@ -1,0 +1,63 @@
+<x-guest-layout>
+    <style>
+
+        .box
+        {
+            height:340px
+        }
+        .m3
+        {
+            background-color:rgb(0, 0, 0);
+            color:white;
+            font-family:'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin: 10px 0px 0px 33px;
+            padding: 18px 180px;
+            border-radius: 3px;
+            border:1px solid silver;
+        }
+        .m3:hover
+        {
+            background-color:rgb(43, 142, 235);
+            cursor: pointer;
+            border:1px solid silver;
+        }
+        .text-box
+        {
+            text-decoration: none;
+            color:rgb(255, 0, 25);
+            text-align: center;
+            list-style: none;
+            font-weight: 900;
+        }
+
+    </style>
+
+    <div class="container">
+        <div class="box">
+            <h1 style="text-align: center;">Please confirm your password</h1>
+            <h2 style="text-align: center; font-size:15px;">This is a secure area of the application. Please confirm your password before continuing.</h2>
+
+            <form method="POST" action="{{ route('password.confirm') }}">
+                @csrf
+                <!-- Password -->
+                <div>
+                    <label for="password"><b>Password</b></label>
+                    <x-text-input id="password"
+                                    type="password"
+                                    name="password"
+                                    required autocomplete="current-password" />
+
+                    <x-input-error :messages="$errors->get('password')" class="text-box" />
+                </div>
+
+            
+                <x-primary-button class='m3'>
+                    {{ __('Confirm') }}
+                </x-primary-button>
+            
+            </form>
+        </div>
+    </div>
+</x-guest-layout>
