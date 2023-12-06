@@ -26,7 +26,9 @@ return new class extends Migration
             $table->integer('item_stock');
             $table->integer('item_added_by');
             $table->timestamps();
+            $table-> unique(['item_name','item_strength']);
         });
+        
     }
 
     /**

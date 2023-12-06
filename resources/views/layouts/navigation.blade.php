@@ -15,9 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if (Auth::user()->role == 1)
                     <x-nav-link href="{{ url('item') }}" :active="request()->routeIs('itemGIT')">
                         {{ __('Item') }}
                     </x-nav-link>
+                    @endif
+                    <x-nav-link href="{{ url('order_list') }}" :active="request()->routeIs('itemGIT')">
+                        {{ __('Order List') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('feedback') }}" :active="request()->routeIs('itemGIT')">
+                        {{ __('Support') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ url('sale') }}" :active="request()->routeIs('itemGIT')">
+                        {{ __('Sale List') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 

@@ -6,6 +6,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Mailcontroller;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\SaleController;
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +33,7 @@ Route::get('/dashboard', function () {
 |
 */
 
+Route::get('/', [HomeController::class,'home']);
 Route::get('/home', [HomeController::class,'home']);
 // Route::get('/home/order/{item_id}', [HomeController::class,'order']);
 
@@ -32,9 +41,75 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/review/{item_id}',[ReviewController::class,'index']);
+Route::post('/review/insert', [ReviewController::class,'insert']);
+Route::get('/review/show/{item_id}', [ReviewController::class,'show']);
+
 Route::get('/item', [ItemController::class,'index']);
 Route::post('/item/insert', [ItemController::class,'insert']);
-Route::get('/item/order/{item_id}', [ItemController::class,'order']);
+Route::get('/item/view/{id}', [ItemController::class,'view']);
+Route::post('/item/edit', [ItemController::class,'edit']);
+Route::get('/item/delete/{id}', [ItemController::class,'delete']);
+
+Route::get('/order_list', [OrderController::class,'index']);
+Route::get('/order_list/items/{id}', [OrderController::class,'items']);
+Route::get('/order_list/details/{id}', [OrderController::class,'billing_details']);
+
+Route::get('/feedback', [FeedbackController::class,'index']);
+Route::post('/feedback/insert', [FeedbackController::class,'insert']);
+Route::get('/feedback/update/{id}', [FeedbackController::class,'update']);
+Route::get('/feedback/delete/{id}', [FeedbackController::class,'delete']);
+
+
+Route::get('/sale', [SaleController::class,'index']);
+
+
+
+//===================================================================================//
+//===================================================================================//
+// order route
+//to add
+Route::post('/item/order/{item_id}', [ItemController::class,'order']);
+//to remove
+Route::get('/remove_cart/{id}/{item_id}', [ItemController::class,'remove_cart']);
+
+//{{url('/remove_cart',['id' => $cart->id, 'item_id '=> $cart->item_id] )}}
+
+// cart page controller
+Route::get('/show_cart', [HomeController::class,'show_cart']);
+//==============================================================================================
+// wishlist page controller
+Route::get('/show_wishlist', [HomeController::class,'show_wishlist']);
+//{{url('wishlist')}}
+Route::get('/add_wishlist/{item_id}', [ItemController::class,'add_wishlist']);
+//{{ url('add_wishlist') }}/{{ $item->id }}
+Route::get('/remove_wishlist/{id}/{item_id}', [ItemController::class,'remove_wishlist']);
+
+Route::post('/wish_order/{item_id}', [ItemController::class,'wish_order']);
+
+
+//=======================================================================================================//
+//=======================================================================================================//
+
+// payment page controller
+Route::get('/cash_order', [HomeController::class,'cash_order']);
+Route::post('/place_Corder', [HomeController::class,'place_Corder']);
+
+
+Route::get('/card/{totalprice}', [HomeController::class,'card']);
+Route::post('stripe/{totalprice}',[HomeController::class,'stripePost'])->name('stripe.post');
+
+
+
+
+Route::get('/send_email',[App\Controllers\Mailcontroller::class,'index']);
+
+
+//=======================================================================================================//
+//=======================================================================================================//
+
+
+
 
 Route::get('/redirects', [HomeController::class,'index']);
 
@@ -44,7 +119,8 @@ Route::get('/callback', [FacebookController::class, 'facebookCallback']);
 Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 
-
+// cart page controller
+Route::get('/show_cart', [HomeController::class,'show_cart']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

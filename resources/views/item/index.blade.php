@@ -5,15 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -175,6 +167,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     Item Added At
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -215,10 +210,15 @@
                                         {{ $item->item_stock }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $item->item_added_by }}
+                                        {{ App\Models\User::find($item->item_added_by)->name }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $item->created_at }}
+                                        {{ $item->created_at->diffForHumans() }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <a href="{{ url('/item/view') }}/{{ $item->id }}" class="btn btn-danger btn-sm">Edit</a>
+                                        <br>
+                                        <a href="{{ url('/item/delete') }}/{{ $item->id }}" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                             @endforeach
