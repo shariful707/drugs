@@ -25,13 +25,15 @@ class HomeController extends Controller
     {
         $items = Item::all();
         $role=Auth::user()->role;
+        $search = $request['search'] ?? "";
+        $filter = $request['filter'] ?? "";
         if ($role== "1")
         {
             return view("dashboard",compact('items'));
         }
         else
         {
-            return view("welcome",compact('items'));
+            return view("welcome",compact('items','search','filter'));
         }
     }
     function home(Request $request){

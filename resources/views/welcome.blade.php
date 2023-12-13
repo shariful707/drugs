@@ -78,8 +78,11 @@
                                     {{ $item->item_stock }}
                                 </td>
                                 <td>
+                                    {{ $item->item_stock }}
                                     @if ($item->item_stock < 1)
                                         <a class="btn btn-warning btn-sm" disabled>Stock Out</a>
+                                        <a href="{{ url('request_item') }}/{{ $item->id }}"
+                                            class="mt-1 btn btn-success btn-sm">Request Order</a>
                                     @else
                                         <!------------------- submit form added ------------------------------>
 
